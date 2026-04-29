@@ -1,5 +1,6 @@
 import Task4.Transaction;
 import Task4.TransactionStats;
+import Task5.Product;
 import org.example.Task3.Employee;
 import org.example.Task3.Task3;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static Task4.Task4.calculator;
+import static Task5.Task5.FilterProduct;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskTest {
@@ -44,5 +46,33 @@ public class TaskTest {
         assertEquals(6500,result.getSum());
         assertEquals(2166.67,result.getAvg(),DELTA);
         assertEquals(4000,result.getMax());
+    }
+
+    @Test
+    void testFilterProduct() {
+        List<Product> products = Arrays.asList(
+                new Product("iPhone", "Electronics", 120000),
+                new Product("MacBook", "Electronics", 210000),
+                new Product("Chair", "Furniture", 15000),
+                new Product("Table", "Furniture", 22000),
+                new Product("Pen", "Office", 100)
+        );
+
+        Map<String, Product> result = FilterProduct(products);
+
+        Product electronics = result.get("Electronics");
+        assertEquals("MacBook", electronics.getName());
+        assertEquals("Electronics", electronics.getCategory());
+        assertEquals(210000, electronics.getPrice());
+
+        Product furniture = result.get("Furniture");
+        assertEquals("Table", furniture.getName());
+        assertEquals("Furniture", furniture.getCategory());
+        assertEquals(22000, furniture.getPrice());
+
+        Product office = result.get("Office");
+        assertEquals("Pen", office.getName());
+        assertEquals("Office", office.getCategory());
+        assertEquals(100, office.getPrice());
     }
 }
